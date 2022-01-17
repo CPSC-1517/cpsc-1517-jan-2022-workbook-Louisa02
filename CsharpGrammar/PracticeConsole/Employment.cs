@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Practice.Data
+namespace PracticeConsole.Data
 {
     internal class Employment
     {
@@ -80,7 +80,10 @@ namespace Practice.Data
         // The system generates an internal storage area of the return data type
         // The system manages the internal storage for the accessor and mutator
         // there is NO additional logic applied to the data value
-        public int Level { get; set; }
+
+        // Using an enum for this field wiill AUTOMATICALLY restricts the values
+        // this property can contain
+        public SupervisoryLevel Level { get; set; }
 
 
         // This property Years could be coded as either a fully implemented property
@@ -120,12 +123,12 @@ namespace Practice.Data
             // constructor body
             // a) empty
             // b) you COULD assign literal value to your properties with this constructor
-            Level = 0;
+            Level = SupervisoryLevel.TeamMember;
             Title = "Unknown";
         }
 
         // Greedy Constructor
-        public Employment(string title, int level, double years)
+        public Employment(string title, SupervisoryLevel level, double years)
         {
             // constructor body
             // a) a parameter for each property
@@ -152,7 +155,7 @@ namespace Practice.Data
             return $"{Title},{Level},{Years}";
         }
 
-        public void SetEmployeeResponsibilityLevel(int level)
+        public void SetEmployeeResponsibilityLevel(SupervisoryLevel level)
         {
             // you could do validation within this method to ensure acceptable value
             if (level < 0)
