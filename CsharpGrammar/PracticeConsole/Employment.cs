@@ -92,7 +92,14 @@ namespace PracticeConsole.Data
         public double Years
         {
             get { return _Years; }
-            set { _Years = value; }
+            set 
+            { 
+                if (!Utilities.IsPositive(value))
+                {
+                    throw new ArgumentNullException("Year cannot be a negative value");
+                }
+                _Years = value; 
+            }
         }
 
 
