@@ -43,7 +43,7 @@ namespace PracticeConsole.Data
             }
         }
 
-        public ResidentAddress(int Number, string Address1, string Address2, string Unit, 
+        public ResidentAddress(int Number, string Address1, string Address2, string Unit,
                                                        string City, string ProvinceState)
         {
             // concern: parameter name is exactly the same as the struct/class field/property
@@ -54,12 +54,19 @@ namespace PracticeConsole.Data
             this.Number = Number;
             this.Address1 = Address1;
             this.Address2 = Address2;
+            this.ProvinceState = ProvinceState;
             _Unit = Unit;
             _City = City;
-            this.ProvinceState = ProvinceState;
+        }
+            
 
             // note that no "default" constructor was created because i wish the program
             // to assign the address with all necessary data at creation time.
+
+        public override string ToString()
+        {
+            return $"{Number},{Address1},{Address2},{Unit},{City},{ProvinceState}";
         }
+    }
     }
 }
