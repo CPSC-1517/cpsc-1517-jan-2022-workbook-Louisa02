@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace PracticeConsole.Data
 {
-    // struct is another developer defined data type
-    // looks like a class
-    // struct however is a value type storage where as class is a reference type storage
-    // struct can have fields, properties, constructors, and behaviours
-    internal struct ResidentAddress
+    //struct is another developer defined data type
+    //looks like a class definition
+    //struct however is a value type storage where as class is a reference type storage
+    //struct can have fields, properties, constructors and behaviours
+
+    public struct ResidentAddress
     {
         public int Number;
         public string Address1;
@@ -21,35 +22,25 @@ namespace PracticeConsole.Data
 
         public string Unit
         {
-            get 
-            { 
-                return _Unit; 
-            }
-            set
-            {
-                _Unit = value;
-            }
+            get { return _Unit; }
+            set { _Unit = value; }
         }
 
         public string City
         {
-            get
-            {
-                return _City;
-            }
-            set
-            {
-                _City = value;
-            }
+            get { return _City; }
+            set { _City = value; }
         }
 
-        public ResidentAddress(int Number, string Address1, string Address2, string Unit,
-                                                       string City, string ProvinceState)
+        public ResidentAddress(int Number, string Address1, string Address2,
+                                    string Unit, string City, string ProvinceState)
         {
-            // concern: parameter name is exactly the same as the struct/class field/property
-            // solution: use the keyword 'this.' on your instance item
-            // the keyword 'this' references to the instance that you are currently accessing
-            // in your program
+            //concern: parameter name is exactly the same as the struct/class field/property
+            //
+            //solution: use the keyword this. on your instance item
+            //
+            //the keyword this references to the instance that you are currently
+            //      accessing in your program
 
             this.Number = Number;
             this.Address1 = Address1;
@@ -58,15 +49,13 @@ namespace PracticeConsole.Data
             _Unit = Unit;
             _City = City;
         }
-            
 
-            // note that no "default" constructor was created because i wish the program
-            // to assign the address with all necessary data at creation time.
+        //note that no "default" constructor was created because I wish the program
+        //  to assign the address with all necessary data at creation time.
 
         public override string ToString()
         {
             return $"{Number},{Address1},{Address2},{Unit},{City},{ProvinceState}";
         }
-    }
     }
 }

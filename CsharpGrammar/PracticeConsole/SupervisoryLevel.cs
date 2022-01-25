@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PracticeConsole.Data
 {
-    internal enum SupervisoryLevel
+    public enum SupervisoryLevel
     {
         Entry,               // 0
         TeamMember,          // 1

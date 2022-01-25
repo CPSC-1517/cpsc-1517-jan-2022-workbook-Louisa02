@@ -8,11 +8,12 @@ namespace PracticeConsole
 {
     public static class Utilities
     {
-        // these type of classes should not hold and retain data
-        // "static" makes only one active copy of the class when the program runs
-        // when using a static class, the developer does NOT create
-        // an individual instance, instead the developer will reference items
-        // in the static by ClassName.Method()
+        //these types of classes should not hold and retain data
+        //"static" makes only one active copy of the class
+        //      when the program runs
+        //when using a static class, the developer does NOT create
+        //      an individual instance, instead the developer will
+        //      reference items in the static class by ClassName.Method()
 
         public static bool IsEmpty(string value)
         {
@@ -24,7 +25,7 @@ namespace PracticeConsole
             return valid;
         }
 
-        // overloaded method
+        //overloaded methods
         public static bool IsPositive(int value)
         {
             bool valid = false;
@@ -34,7 +35,6 @@ namespace PracticeConsole
             }
             return valid;
         }
-
         public static bool IsPositive(double value)
         {
             bool valid = false;
@@ -44,7 +44,6 @@ namespace PracticeConsole
             }
             return valid;
         }
-
         public static bool IsPositive(decimal value)
         {
             bool valid = false;
