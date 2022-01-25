@@ -20,10 +20,39 @@ static void DisplayPerson(Person person)
 {
     DisplayString($"{person.FirstName} {person.LastName}");
     DisplayString($"{person.Address.ToString()}");
-    foreach(var emp in person.EmploymentPositions)
+
+    if (person.EmploymentPositions != null)
     {
-        DisplayString($"{emp.ToString()}");
+        // this loop is a forward moving pre-test loop
+        // what it checks is "is there another link element to look at"
+        // Yes: use the element
+        // No: exit the loop
+        foreach (var emp in person.EmploymentPositions)
+        {
+            DisplayString($"{emp.ToString()}");
+        }
+        Console.WriteLine();
+
+        // A List<T> can actually be manipulated like an array
+        for (int i = 0; i < person.EmploymentPositions.Count; i++)
+        {
+            DisplayString(person.EmploymentPositions[i].ToString());
+        }
+        Console.WriteLine();
+
+        if (person.EmploymentPositions.Count > 0)
+        {
+            int x = 0;
+            // a post-test loop
+            do
+            {
+                DisplayString(person.EmploymentPositions[x].ToString());
+                x++;
+            } while (x < person.EmploymentPositions.Count);
+        }
+        Console.WriteLine();
     }
+        
 }
 
 Employment CreateJob()
