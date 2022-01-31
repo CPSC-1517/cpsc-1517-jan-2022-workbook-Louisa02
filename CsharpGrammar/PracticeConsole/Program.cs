@@ -3,6 +3,7 @@ using PracticeConsole.Data; // gives reference to the location of classes within
                             // the specified namespace
                             // this allows the developer to avoid having to use a fully qualified
                             // name every time a reference is made to a class in the namespace
+using System.Text.Json;
 
 // Fully qualified name
 // PracticeConsole.Data.Employment job = CreateJob();
@@ -10,6 +11,12 @@ Employment Job = CreateJob();
 ResidentAddress Address = CreateAddress();
 Person Me = CreatePerson(Job, Address);
 DisplayPerson(Me);
+
+//ArrayReview(Me);
+
+string pathName = CreateCSVFile();
+ReadCSVFile(pathName);
+
 
 static void DisplayString(string text)
 {
@@ -147,4 +154,161 @@ Person CreatePerson(Employment job, ResidentAddress address)
         DisplayString("Run time error: " + ex.Message);
     }
     return thePerson;
+}
+
+void ArrayReview(Person person)
+{
+    //Declare a single-dimensional array size 5
+    //In this declaration the value in each element is set
+    //  to the datatype's default (numeric - > 0)
+    int[] array1 = new int[5]; //one can use a literal for the size
+    //PrintArray(array1, 5, "declare int array size 5");
+
+    //Declare and set array elements
+    int[] array2 = new int[] { 1, 2, 4, 8, 16 };
+    //PrintArray(array2, 5, "declare int array size using a list of supplied values");
+
+    //alternate syntax
+    int[] array3 = { 1, 3, 6, 12, 24 };
+    // PrintArray(array3, array3.Length, "declare int array with just a list of supplied values");
+
+    //Travsering to an array altering elements
+    //remember that the array when declared is physically created in memory
+    //each element (cell) has a given value, even if it is the datatype default
+    //when you are "adding" to an array you are really just altering the element value
+
+    //size of the array can be determind using the method .Count() of the array collection 
+    //  using the inherited class IEnumerable (Array class derived from the base class IEnumerable
+    //  which is derived from its base class Collections)
+    //size of the array can be determind using the read-only property (just has a get{}) of the
+    //  Array class called .Length
+
+    //logical counter for your array size to indicate the "valid meaningful" values for processing
+    int lsarray1 = 0;
+    int lsarray2 = array2.Count();  //IEnumerable method
+    int lsarray3 = array3.Length;   //Array read-only property
+
+    Random random = new Random();
+    int randomvalue = 0;
+    while (lsarray1 < array1.Length)
+    {
+        randomvalue = random.Next(0, 100);
+        array1[lsarray1] = randomvalue;
+        lsarray1++;
+    }
+    //  PrintArray(array1, lsarray1, "array load with random values");
+
+    //Alter a element randomly selected to a new value
+    int arrayposition = random.Next(0, array1.Length);
+    randomvalue = random.Next(0, 100);
+    array1[arrayposition] = randomvalue;
+    PrintArray(array1, lsarray1, "randomly replace an array value");
+
+    //Remove an element value from an array
+    //move all array element in positions greater than the removed element position, "up one"
+    //Assume we are removing element 3 (index 2)
+    int logicalelementnumber = 3; //index of value is logicalposition - 1
+    for (int index = --logicalelementnumber; index < array1.Length - 1; index++)
+    {
+        array1[index] = array1[index + 1];
+    }
+    lsarray1--;
+    array1[array1.Length - 1] = 0;
+    PrintArray(array1, array1.Length, "remove an array value");
+
+}
+
+
+void PrintArray(int[] array, int size, string text)
+{
+    Console.WriteLine($"\n{text}\n");
+    //item represents an element in the array
+    //array is your collection (array [])
+    //processing will be start (0) to end (size-1)
+    foreach (var item in array)
+    {
+        Console.Write($"{item},");
+    }
+    Console.WriteLine("\n");
+    //using the for loop this display output the
+    //      array back to front
+    for (int i = size - 1; i >= 0; i--)
+    {
+        Console.Write($"{array[i]},");
+    }
+    Console.WriteLine("\n");
+}
+
+string CreateCSVFile()
+{
+    string pathname = "../../../Employment.data";
+    try
+    {
+        List<Employment> Jobs = new List<Employment>();
+        Jobs.Add(new Employment("trainee", SupervisoryLevel.Entry, 0.5));
+        Jobs.Add(new Employment("worker", SupervisoryLevel.TeamMember, 3.5));
+        Jobs.Add(new Employment("worker", SupervisoryLevel.TeamMember, 2.1));
+        Jobs.Add(new Employment("leader", SupervisoryLevel.TeamLeader, 7.8));
+        Jobs.Add(new Employment("worker", SupervisoryLevel.Supervisor, 6.0));
+        Jobs.Add(new Employment("worker", SupervisoryLevel.DepartmentHead, 2.1));
+
+        // Create a list of comma-seperated value strings
+        // the contents of each string will be 3 values of Employment
+
+        // in .Net Core when declaring an instance of a class, it is now not neccessary
+        // to specify the class name after the new.
+        List<string> csvLines = new();
+
+        // plact all the instances of Employment into the List<String>
+        foreach (var item in Jobs)
+        {
+            // Item represents an instance of Employment in the collection Jobs
+            //.ToString() is the override method in Employment that returns
+            // call Employment instance value as comma-seperated values
+            csvLines.Add(item.ToString());
+        }
+
+        // write to a csv file requires the System.IO namespaces
+        // writing a file will default the output to the folder that
+        //    contains the executing .exe file
+        // There are several ways to output this file such as using SteamWriter
+        // and using the File class
+        // Within the File class there is a method that outputs a list of strings
+        // all within one command. There is NO NEED for a StreamWriter instance.
+
+        // The pathname of the method at minimum MUST be the filename.
+        // The pathname can redirect the default location by using relative addressing with the filename
+
+        File.WriteAllLines(pathname, csvLines);
+        Console.WriteLine($"\nCheck out the CSV file at: {Path.GetFullPath(pathname)}");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    return Path.GetFullPath(pathname);
+}
+
+void ReadCSVFile(string pathname)
+{
+    // Reading a CSV file is similar to writing. One can read ALL lines
+    // at one time. There is no need for a StreamReader. One concern
+    // would be the size of the expected file.
+    try
+    {
+        string[] csvFileInput = File.ReadAllLines(pathname);
+        Console.WriteLine("\n\nContents of CSV Employment file: \n");
+        foreach (var item in csvFileInput)
+        {
+            Console.WriteLine(item);
+        }
+    }
+    catch (IOException ex)
+    {
+        Console.WriteLine($"Reading CSV file error: {ex.Message}");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }   
 }
