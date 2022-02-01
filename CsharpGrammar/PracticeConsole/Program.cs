@@ -15,7 +15,14 @@ DisplayPerson(Me);
 //ArrayReview(Me);
 
 string pathName = CreateCSVFile();
-ReadCSVFile(pathName);
+
+Console.WriteLine("\n Results of parsing the incoming CSV Employment data file\n");
+List<Employment> Jobs = ReadCSVFile(pathName);
+Console.WriteLine("\n Results of good parsed incoming CSV Employment data\n");
+foreach (Employment employment in Jobs)
+{
+    DisplayString(employment.ToString());
+}
 
 
 static void DisplayString(string text)
@@ -268,6 +275,14 @@ string CreateCSVFile()
             csvLines.Add(item.ToString());
         }
 
+        // TESTING FOR BAD INPUT CSV DATA
+
+        csvLines.Add($"{SupervisoryLevel.Owner},4.5"); //missing value error
+        csvLines.Add($",{SupervisoryLevel.DepartmentHead},4.5"); //missing text error on title
+        csvLines.Add($"Bad Years,{SupervisoryLevel.Owner},Bob"); // non numeric value for years
+        csvLines.Add($"Bad Years,{SupervisoryLevel.Owner},-4.5"); // negative value for years
+
+
         // write to a csv file requires the System.IO namespaces
         // writing a file will default the output to the folder that
         //    contains the executing .exe file
@@ -289,26 +304,61 @@ string CreateCSVFile()
     return Path.GetFullPath(pathname);
 }
 
-void ReadCSVFile(string pathname)
+List<Employment> ReadCSVFile(string pathname)
 {
-    // Reading a CSV file is similar to writing. One can read ALL lines
-    // at one time. There is no need for a StreamReader. One concern
-    // would be the size of the expected file.
-    try
+    List<Employment> inputList = new List<Employment>();
     {
-        string[] csvFileInput = File.ReadAllLines(pathname);
-        Console.WriteLine("\n\nContents of CSV Employment file: \n");
-        foreach (var item in csvFileInput)
+        // Reading a CSV file is similar to writing. One can read ALL lines
+        // at one time. There is no need for a StreamReader. One concern
+        // would be the size of the expected file.
+        try
         {
-            Console.WriteLine(item);
+            string[] csvFileInput = File.ReadAllLines(pathname);
+
+            //create a resuable instance of Employment
+            Employment job = null;
+            // items represent a line (record) in the incoming data
+            // attempt to process EACH line whether any of the incoming
+            //      lines have an error or not
+            // Thus you will NEED to manage teh errors on the 
+            //      individual line as you process that line
+            //      AND be able to continue to the NEXT line
+            foreach (var line in csvFileInput)
+            {
+                try
+                {
+                    bool returnBool = Employment.TryParse(line, out job);
+                    //returned value is ALREADY a boolean value: it is already TRUE or FALSE
+                    // there is NO NEED to use a relative operator condition to test the field
+                    //      (returnBool == true) is NOT NECESSARY
+                    // a relative operator conndition RESOLVES to True or False
+                    if (returnBool)
+                    {
+                        inputList.Add(job);
+                    }
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine($"Format error: {ex.Message}");
+                }
+                catch (ArgumentNullException ex)
+                {
+                    Console.WriteLine($"Format error: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($" error: {ex.Message}");
+                }
+            }
+        }
+        catch (IOException ex)
+        {
+            Console.WriteLine($"Reading CSV file error: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
-    catch (IOException ex)
-    {
-        Console.WriteLine($"Reading CSV file error: {ex.Message}");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine(ex.Message);
-    }   
+    return inputList;
 }
