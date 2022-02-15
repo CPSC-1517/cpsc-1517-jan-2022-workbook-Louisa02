@@ -3,7 +3,9 @@ using PracticeConsole.Data; // gives reference to the location of classes within
                             // the specified namespace
                             // this allows the developer to avoid having to use a fully qualified
                             // name every time a reference is made to a class in the namespace
+#region Additional Namespaces
 using System.Text.Json;
+#endregion
 
 // Fully qualified name
 // PracticeConsole.Data.Employment job = CreateJob();
@@ -24,6 +26,12 @@ foreach (Employment employment in Jobs)
     DisplayString(employment.ToString());
 }
 
+#region JSON file Read and Write
+string Jsonpathname = "../../../Employee.json";
+SaveAsJson(Me, Jsonpathname);
+Person You = ReadAsJson(Jsonpathname);
+DisplayPerson(You);
+#endregion
 
 static void DisplayString(string text)
 {
@@ -361,4 +369,44 @@ List<Employment> ReadCSVFile(string pathname)
         }
     }
     return inputList;
+}
+
+void SaveAsJson(Person me, string pathname)
+{
+    //the term use to read and write Json file is Serialization
+    //the classes use are referred to as serializers
+    //with writing we can make the file produced more readable by using indentation
+    //Json is very good at using object and properties however, it
+    //  needs help/prompting to work better with fields
+    JsonSerializerOptions options = new JsonSerializerOptions
+    {
+        WriteIndented = true,
+        IncludeFields = true,
+    };
+
+    //Serialization
+    // produce of serilization is a string
+    string jsonstring = JsonSerializer.Serialize<Person>(me, options);
+    //output the json string to your file indicated in the path
+    File.WriteAllText(pathname, jsonstring);
+
+}
+
+Person ReadAsJson(string pathname)
+{
+    Person you = null;
+    try
+    {
+        //bring in the text from the file
+        string jsonstring = File.ReadAllText(pathname);
+
+        //use the deserializer to unpack the json string into
+        //      the expected structure (<Person>)
+        you = JsonSerializer.Deserialize<Person>(jsonstring);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    return you;
 }

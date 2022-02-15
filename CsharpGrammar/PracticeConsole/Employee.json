@@ -1,0 +1,34 @@
+{
+  "FirstName": "LouisaWithJob",
+  "LastName": "Luo",
+  "EmploymentPositions": [
+    {
+      "Title": "Boss",
+      "Level": 3,
+      "Years": 5.5
+    },
+    {
+      "Title": "worker",
+      "Level": 1,
+      "Years": 2.1
+    },
+    {
+      "Title": "leader",
+      "Level": 2,
+      "Years": 7.8
+    },
+    {
+      "Title": "Boss",
+      "Level": 3,
+      "Years": 5.5
+    }
+  ],
+  "Address": {
+    "Unit": null,
+    "City": "Edmonton",
+    "Number": 10767,
+    "Address1": "106 ST NW",
+    "Address2": null,
+    "ProvinceState": "AB"
+  }
+}
