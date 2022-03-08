@@ -10,4 +10,8 @@
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WestWindSystem\WestWindSystem.csproj" />
+  </ItemGroup>
+
 </Project>
