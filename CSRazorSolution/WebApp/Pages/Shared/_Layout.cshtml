@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - WebApp</title>
-    @* remove the link to bootstrap 
-       added link to Holiday.css
-       https://holida
+    @*removed the link to bootstrap
+      added linkt to Holiday.css
+      https://holidaycss.js.org/
     *@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/holiday.css@0.9.8" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -18,13 +18,14 @@
             <ul>
                 <li>
                     <a asp-area="" asp-page="/Index">
-                        <img src="~/img/ChinookMusicMenuLogo.jpg" alt="Logo image" title="Go to Home" />
+                        <img src="~/img/ChinookMusicMenuLogo.jpg" alt="Logo image"
+                            title="Go to Home" />
                     </a>
                 </li>
                 <li>
                     <a asp-area="" asp-page="/Index">Home</a>
                 </li>
-                @* Setup for submenu using holiday css *@
+                @* setup for a submenu using holiday css*@
                 <li>
                     <span>Samples</span>
                     <ul>
@@ -34,7 +35,7 @@
                 <li>
                     <a asp-area="" asp-page="/Privacy">Privacy</a>
                 </li>
-            </ul>
+            </ul>   
         </nav>
     </header>
     <div>

@@ -13,7 +13,6 @@ namespace WebApp.Pages
         }
 
         public string MyName { get; set; }
-
         public void OnGet()
         {
             Random random = new Random();

@@ -6,13 +6,13 @@
 
     <h1>Welcome to Razor Pages in CPSC-1517</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <br /><br />
+    <br/><br/>
     @if(string.IsNullOrWhiteSpace(Model.MyName))
-    {
-        <p>The world of Razor is currently closed.</p>
-    }
-    else
-    {
-        <p style = "color:forestgreen; font-weight:bold;">@Model.MyName</p>
-    }
+        {
+            <p>The world of Razor is currently closed.</p>
+        }
+        else
+        {
+            <p style="color:forestgreen; font-weight:bold;">@Model.MyName</p>
+        }
 
