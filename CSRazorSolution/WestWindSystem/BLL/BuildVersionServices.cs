@@ -12,7 +12,7 @@ using WestWindSystem.Entities;
 
 namespace WestWindSystem.BLL
 {
-    internal class BuildVersionServices
+    public class BuildVersionServices
     {
         #region setup of the context connection variable and class constructor
 
@@ -26,10 +26,10 @@ namespace WestWindSystem.BLL
         }
         #endregion
 
-        #region Services:  Query
+        #region Services: Query
 
         //create a method (services) that will retrieve the BuildVersion record
-        //this will be called from the web app (PageModel file), thus it needs to be public
+        //this will be called from the wep app (PageModel file), thus it needs to be public
         //this becomes part of the class library's (application library) public interface
         public BuildVersion GetBuildVersion()
         {
@@ -37,7 +37,7 @@ namespace WestWindSystem.BLL
             //    BuildVersion data
             //using this property will retrieve your data from the database
             //the query will get the first record from the database collection (records)
-            //     and return it
+            //   and return it
             //if no data was returned from sql for the query, the returned value will be null
             BuildVersion info = _context.BuildVersions.FirstOrDefault();
             return info;
