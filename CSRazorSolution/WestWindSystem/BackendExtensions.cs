@@ -50,6 +50,12 @@ namespace WestWindSystem
                 return new RegionServices(context);
             });
 
+            services.AddTransient<TerritoryServices>((serviceProvider) =>
+            {
+                var context = serviceProvider.GetService<WestWindContext>();
+                return new TerritoryServices(context);
+            });
+
         }
 
 
