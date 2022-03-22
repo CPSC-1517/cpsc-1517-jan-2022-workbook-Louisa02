@@ -10,13 +10,13 @@ using WebApp.Helpers;
 
 namespace WebApp.Pages.Samples
 {
-    public class PartialFillterSearchModel : PageModel
+    public class PartialFilterSearchModel : PageModel
     {
         private readonly ILogger<PrivacyModel> _logger;
         private readonly TerritoryServices _territoryServices;
         private readonly RegionServices _regionServices;
 
-        public PartialFillterSearchModel(ILogger<PrivacyModel> logger, TerritoryServices territoryServices, RegionServices regionServices)
+        public PartialFilterSearchModel(ILogger<PrivacyModel> logger, TerritoryServices territoryServices, RegionServices regionServices)
         {
             _logger = logger;
             _territoryServices = territoryServices;
