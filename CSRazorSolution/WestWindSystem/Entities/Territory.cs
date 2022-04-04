@@ -8,20 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WestWindSystem.Entities
 {
-    public partial class Region
+    public partial class Territory
     {
-        public Region()
-        {
-            Territories = new HashSet<Territory>();
-        }
-
         [Key]
-        public int RegionID { get; set; }
+        [StringLength(20)]
+        public string TerritoryID { get; set; }
         [Required]
         [StringLength(50)]
-        public string RegionDescription { get; set; }
+        public string TerritoryDescription { get; set; }
+        public int RegionID { get; set; }
 
-        [InverseProperty(nameof(Territory.Region))]
-        public virtual ICollection<Territory> Territories { get; set; }
+        [ForeignKey(nameof(RegionID))]
+        [InverseProperty("Territories")]
+        public virtual Region Region { get; set; }
     }
 }
