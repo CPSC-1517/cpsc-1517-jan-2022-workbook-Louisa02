@@ -5,4 +5,13 @@
 }
 <h1>Receiving Pass of passed data</h1>
 
-<p>The value you passed was @Model.territoryid</p>
+
+@if(Model.territoryid == null)
+{
+    <p>No value was passed &gt;@Model.territoryid&gt;</p>
+}
+else
+{
+    <p>The value you passed was @Model.territoryid</p>
+}
+

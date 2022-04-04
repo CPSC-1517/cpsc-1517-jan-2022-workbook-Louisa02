@@ -29,10 +29,10 @@ namespace WebApp.Pages.Samples
         [BindProperty(SupportsGet = true)]
         public string searcharg { get; set; }
 
-        public List<Territories> TerritoryInfo { get; set; }
+        public List<Territory> TerritoryInfo { get; set; }
 
         [BindProperty]
-        public List<Region> RegionsList { get; set; } = new();
+        public List<Region> RegionList { get; set; } = new();
 
 
         #region Paginator
@@ -49,7 +49,7 @@ namespace WebApp.Pages.Samples
             // current page number. On the initial load of page, this value will be null
             
             //obtain the data list for the Region dropdown list (select tag)
-            RegionsList = _regionServices.Region_List();
+            RegionList = _regionServices.Region_List();
             if (!string.IsNullOrWhiteSpace(searcharg))
             {
                 //setting up for using the paginator only needs to be done if
@@ -72,7 +72,7 @@ namespace WebApp.Pages.Samples
                                   pagenumber, PAGE_SIZE, out totalcount);
 
                 //create the needed paginator instance
-                Pager = new(totalcount, current);
+                Pager = new Paginator(totalcount, current);
             }
         }
 
@@ -91,6 +91,11 @@ namespace WebApp.Pages.Samples
             //searcharg = null;
             ModelState.Clear();
             return RedirectToPage(new { searcharg = (string?)null });
+        }
+
+        public IActionResult OnPostNew()
+        {
+            return RedirectToPage("/Samples/ReceivingPage");
         }
     }
 }

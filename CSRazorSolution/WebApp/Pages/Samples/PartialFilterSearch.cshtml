@@ -11,23 +11,23 @@
     <label>
         Enter a partial Territory description:
         <input type="text" asp-for="searcharg"
-            placeholder="Enter your description" required />
+            placeholder="enter your description"/>
     </label>
-    <br />
-    @*restict the display of the table to when there is data to view*@
+    <br/>
+    @*restrict the display of the table to when there is data to view*@
     @if (Model.TerritoryInfo != null)
     {
-        @if (Model.TerritoryInfo.Count == 0)
+        if (Model.TerritoryInfo.Count == 0)
         {
-            <p style="color:blueviolet; font-weight:bold; font-size:large">
-                There are no terroritories matching your search request.
+            <p style="color:blueviolet; font-weight:bold; font-size:large;">
+                There are no territories matching your search request.
             </p>
         }
         else
         {
             <table>
                 <thead>
-                    @* used for column titles *@
+                    @*used for column titles*@
                     <tr>
                         <th>Territory</th>
                         <th>Name</th>
@@ -35,63 +35,42 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @* used for table details 
-                        the number of rows are usually unknown for a db query
+                    @*used for the table details
+                        the number of rows are unsually unknown for a db query
                     *@
                     @foreach (var item in Model.TerritoryInfo)
                     {
                         <tr>
-                            <td> @*
-                                    this example will send the TerritoryID to
-                                    another page
-                                    use the anchor tag to accompolish this task
-                                    the href page value MUST be reference from
-                                      the page folder
-                                    the value to be passed is attached to the
-                                      end of the page reference
-                                    In this example, the value will be passed 
-                                      to the receiving page ass a routing parameter
-                                    You CAN send multiple vaule to the new page
-                                    The receiving page MUST have the same number of
-                                        routing parameter as those past AND the
-                                        order of the routing parameters is IMPORTANT
-                                    Page reference syntax: /pathname/value[/value/value/...]
-                                    The text of your anchor tag DOES NOT need to be 
-                                       the value that is being passed
-                                *@
-                                <a href="/Samples/ReceivingPage/@item.TerritoryID">
-                                    Edit this territory
-                                </a>
-                                </td>
+                            <td>@item.TerritoryID</td>
                             <td>@item.TerritoryDescription</td>
                             <td><select disabled="true">
-                                    @foreach (var region in Model.RegionsList)
+                                    @foreach (var region in Model.RegionList)
                                     {
-                                        if (region.RegionId == item.RegionID)
+                                        if (region.RegionID == item.RegionID)
                                         {
-                                            <option value="@region.RegionId" selected>@region.RegionDescription</option>
+                                            <option value="@region.RegionID" selected>@region.RegionDescription</option>
                                         }
                                         else
                                         {
-                                            <option value="@region.RegionId">@region.RegionDescription</option>
+                                            <option value="@region.RegionID">@region.RegionDescription</option>
                                         }
                                     }
-                                </select>
+                                </select> 
                             </td>
                         </tr>
                     }
                 </tbody>
                 <tfoot>
-                    @* used for summary table info eg totals 
-                        used for displaying paging information
-                    *@
+                 @*used for summay table information eg totals
+                   used for displaying paging information                                       
+                 *@
                     <tr>
                         <td colspan="3">
                             @{
                                 //the pageRef is the string representation of the
-                                // the value to be displayed AND it's numeric
-                                // the string maybe a character line: Next
-                                // the string maybe a numeric: 4
+                                //  the value to be displayed AND it's numeric
+                                //the string maybe be a character line : Next
+                                //the string maybe be a numeric : 4
                                 //  First Previous 1 2 3 4 5 Next Last
                                 foreach(var pageRef in Model.Pager)
                                 {
@@ -107,14 +86,14 @@
                                         //  is your current web cshtml
                                         //this will cause a OnGet issue
                                         // .Page is the numeric representation
-                                        //   of the desired page
-                                        //for the asp-page your page name reference Must
-                                        // be based from the folder name Pages
+                                        //      of the desired page
+                                        //for the asp-page your page name reference
+                                        //  MUST be based from the folder name Pages
                                         <a title="Page @pageRef.Page"
-                                          asp-page="/Samples/PartialFilterSearch"
-                                          asp-route-currentpage="@pageRef.Page">
-                                          @pageRef.Text
-                                        </a>
+                                           asp-page="/Samples/PartialFilterSearch"
+                                           asp-route-currentpage="@pageRef.Page">
+                                            @pageRef.Text   
+                                         </a>
                                     }
                                 }
                             }
@@ -125,5 +104,7 @@
         }
     }
     <button type="submit" asp-page-handler="Fetch">Fetch Territories</button>&nbsp;&nbsp;
-    <button type="submit" asp-page-handler="Clear" formnovalidate>Clear</button>
+    <button type="submit" asp-page-handler="Clear" formnovalidate>Clear</button>&nbsp;&nbsp;
+    <button type="submit" asp-page-handler="New" formnovalidate>New Territory</button>
+
 </form>

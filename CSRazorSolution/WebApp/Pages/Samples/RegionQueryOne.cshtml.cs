@@ -24,7 +24,7 @@ namespace WebApp.Pages.Samples
         [TempData]
         public string FeedbackMessage { get; set; }
 
-        //SupportGet = true will allowa this property to be matched 
+        //SupportGet = true will allow this property to be matched 
         //   to a routing parameter of the same name.
         [BindProperty(SupportsGet = true)]
 
