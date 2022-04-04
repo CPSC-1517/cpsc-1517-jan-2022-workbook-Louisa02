@@ -9,6 +9,7 @@ using WestWindSystem.DAL;
 using WestWindSystem.Entities;
 #endregion
 
+
 namespace WestWindSystem.BLL
 {
     public class TerritoryServices
@@ -28,47 +29,47 @@ namespace WestWindSystem.BLL
         #region Queries
 
         //query by a string
-        // this partial search query has been alter to allow for paging of its results
-        // IF paging is NOT required then the query should have a single string parameter: partialdescription
-        
-        public List<Territories> GetByPartialDescription(string partialdescription,
-                                                         int pagenumber,
-                                                         int pagesize,
-                                                         out int totalcount)
+        //this partial search query has been alter to allow for paging of its results
+        //IF paging is NOT required the the query should have a single string parameter: partialdescription
+
+        public List<Territory> GetByPartialDescription(string partialdescription,
+                                                        int pagenumber,
+                                                        int pagesize,
+                                                        out int totalcount)
         {
-            IEnumerable<Territories> info = _context.Territories
+            IEnumerable<Territory> info = _context.Territories
                             .Where(x => x.TerritoryDescription.Contains(partialdescription))
                             .OrderBy(x => x.TerritoryDescription);
 
-            //using the paging parameters to obtain only the neccessary rows that
-            // will be shown by the Paginator
+            //using the paging parameters to obtain only the necessary rows that
+            //  will be shown by the Paginator
 
             //determine the total collection size of our query
             totalcount = info.Count();
             //determine the number of rows to skip
-            // this skipped count reflects the rows of the previous pages
+            //this skipped count reflects the rows of the previous pages
             //remember the pagenumber is a natural number (1,2,3,...)
             //this needs to be treated as an index (natural number - 1)
             //the number of rows to skip is index * pagesize
-            int skipRows = (pagesize - 1) * pagesize;
-            //return ONLY the required number of rows
+            int skipRows = (pagenumber - 1) * pagesize;
+            //return only the required number of rows.
             //this will be done using filters belonging to Linq
             //use the filter .Skip(n) to skip over n rows from the beginning of a collection
             //use the filter .Take(n) to take the next n rows from a collection
             return info.Skip(skipRows).Take(pagesize).ToList();
 
-            //this is the return statment thta would be used IF no paging is being implemented
+            //this is the return statement that would be used IF no paging is being implemented
             //return info.ToList();
         }
-
         //query by a number
-        public List<Territories> GetByRegion(int regionid)
+        public List<Territory> GetByRegion(int regionid)
         {
-            IEnumerable<Territories> info = _context.Territories
+            IEnumerable<Territory> info = _context.Territories
                             .Where(x => x.RegionID == regionid)
                             .OrderBy(x => x.TerritoryDescription);
             return info.ToList();
         }
         #endregion
+
     }
 }
