@@ -23,7 +23,7 @@ namespace WestWindSystem.BLL
 
         #region Queries
         //filter search returning all products of the requested category (categoryid)
-        public List<Product> Products_CategoryProducts(int categoryid)
+        public List<Product> Product_CategoryProducts(int categoryid)
         {
             IEnumerable<Product> info = _context.Products
                                         .Where(x => x.CategoryID == categoryid)
@@ -74,6 +74,10 @@ namespace WestWindSystem.BLL
 
         public int Product_AddProduct(Product item)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException("Product data is missing");
+            }
             //this is an optional sample of validation of incoming data
             Product exists = _context.Products
                              .Where(x => x.ProductName.Equals(item.ProductName) &&
@@ -99,6 +103,9 @@ namespace WestWindSystem.BLL
             _context.Products.Add(item);
 
             //commit the LOCAL data to the databse
+
+            //IF there are validation annotation on your Entity
+            // they will be executed during the SaveChanges
             _context.SaveChanges();
 
             //AFTER the commit, your pkey value will now be available
@@ -115,16 +122,22 @@ namespace WestWindSystem.BLL
              // for an update, you MUST have the pkey value on your instance
              //if not, it will not work.
 
-             //this technique returns an instance (object)
-                //Product exists = _context.Products
-                //                 .Where(x => x.ProductID == item.ProductID)
-                //                 .FirstOrDefault();
+            // **** WARNING ****
+            // can cause problems when being used with EntityEntry<t> processing
+            
 
-                //this technique does the search BUT returns only a boolean of success
+             //this technique returns an instance (object)
+             //Product exists = _context.Products
+             //                 .Where(x => x.ProductID == item.ProductID)
+             //                 .FirstOrDefault();
+
+            // **** BETTER ****
+            //this does NOT actually return an instance and thus has no
+            //   CONFLICT with using EntityEntry<T>
+
+            //this technique does the search BUT returns only a boolean of success
             bool exists = _context.Products.Any(x => x.ProductID == item.ProductID);
 
-            //DEPENDING on which technique you use, your error test will be different
-             //one:  if(exists == null) {...}
             if (!exists)
             {
                 throw new Exception($"{item.ProductName} with a size of {item.QuantityPerUnit}" +

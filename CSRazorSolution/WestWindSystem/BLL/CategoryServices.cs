@@ -21,7 +21,7 @@ namespace WestWindSystem.BLL
         #endregion
 
         #region Query
-        public List<Category> Region_List()
+        public List<Category> Category_List()
         {
             IEnumerable<Category> info = _context.Categories
                                        .OrderBy(x => x.CategoryName);

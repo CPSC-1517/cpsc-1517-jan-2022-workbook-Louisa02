@@ -35,7 +35,7 @@ namespace WestWindSystem.BLL
         public Region Region_GetById(int regionid)
         {
             Region info = _context.Regions
-                            .Where(acollectionrow => acollectionrow.RegionId == regionid)
+                            .Where(acollectionrow => acollectionrow.RegionID == regionid)
                             .FirstOrDefault();
             return info;
         }

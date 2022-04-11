@@ -41,7 +41,7 @@
                     @foreach (var item in Model.TerritoryInfo)
                     {
                         <tr>
-                            <td>@item.TerritoryID</td>
+                            <td><a href="/Samples/ReceivingPage/@item.TerritoryID">Edit</a></td>
                             <td>@item.TerritoryDescription</td>
                             <td><select disabled="true">
                                     @foreach (var region in Model.RegionList)

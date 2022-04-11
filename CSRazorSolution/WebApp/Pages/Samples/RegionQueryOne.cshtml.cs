@@ -60,7 +60,7 @@ namespace WebApp.Pages.Samples
                 }
                 else
                 {
-                    FeedbackMessage = $"ID: {regionInfo.RegionId} Description {regionInfo.RegionDescription}";
+                    FeedbackMessage = $"ID: {regionInfo.RegionID} Description {regionInfo.RegionDescription}";
                 }
             }
         }
